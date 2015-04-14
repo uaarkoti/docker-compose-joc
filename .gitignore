@@ -60,6 +60,7 @@ bin/
 **/war/
 **/jobs/**/builds/*
 **/slow-requests/*
+failed-boot-attempts.txt
 
 # Tools that Jenkins manages
 /tools/
