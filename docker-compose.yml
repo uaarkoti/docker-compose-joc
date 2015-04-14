@@ -79,4 +79,3 @@ proxy:
     environment:
         - DNSDOCK_NAME=mobileteam
         - DNSDOCK_IMAGE=proxy
-        - DNSDOCK_ALIAS=joc.proxy.docker,apiteam.proxy.docker

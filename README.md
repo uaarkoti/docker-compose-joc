@@ -7,11 +7,9 @@ Mostly specific to Mac OS X but should work on Windows and Linux as well.
 
 ####Base includes:
 - [dnsdock](https://github.com/tonistiigi/dnsdock) providing DNS for docker containers and exposed to Mac OS X 
-- JOC by CloudBees - availabe at http://joc.proxy.docker
-  - http://joc.demo.docker:8080
+- JOC by CloudBees (non HA) - availabe at http://joc.demo.docker:8080
   - JNLP port: `4001`
-- Client Master api-team: http://apiteam.proxy.docker
-  - http://apiteam.demo.docker:8080
+- Client Master api-team (non HA): http://apiteam.demo.docker:8080
 - Client Master (HA) mobile-team: http://mobileteam.proxy.docker
   - http://mobileteam1.demo.docker:8080
   - http://mobileteam2.demo.docker:8080
