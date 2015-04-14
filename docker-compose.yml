@@ -1,0 +1,82 @@
+dns:
+    image: t0mk/dnscock
+    ports: 
+        - "172.17.42.1:53:53/udp"
+    volumes: 
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ~/projects/cloudbees/docker/compose/docker-compose-joc:/data
+    command: "-debug=true"
+joc:
+    image: apemberton/jenkins-operations-center
+    command: --prefix=""
+    expose:
+        - "4001"
+    volumes_from:
+        - dns
+    environment:
+        - JENKINS_HOME=/data/var/lib/jenkins/joc
+        - DNSDOCK_NAME=joc
+        - DNSDOCK_IMAGE=demo
+apiTeam:
+    image: apemberton/jenkins-enterprise
+    command: --prefix=""
+    volumes_from:
+        - dns
+        - joc
+    environment:
+        - JENKINS_HOME=/data/var/lib/jenkins/api-team
+        - DNSDOCK_NAME=apiteam
+        - DNSDOCK_IMAGE=demo
+mobileTeam1:
+    image: apemberton/jenkins-enterprise
+    command: --prefix=""
+    volumes_from:
+        - dns
+        - apiTeam
+    environment:
+        - JENKINS_HOME=/data/var/lib/jenkins/mobile-team
+        - DNSDOCK_NAME=mobileteam1
+        - DNSDOCK_IMAGE=demo
+mobileTeam2:
+    image: apemberton/jenkins-enterprise
+    command: --prefix=""
+    volumes_from:
+        - dns
+        - mobileTeam1
+    environment:
+        - JENKINS_HOME=/data/var/lib/jenkins/mobile-team
+        - DNSDOCK_NAME=mobileteam2
+        - DNSDOCK_IMAGE=demo
+slave1:
+    image: apemberton/jenkins-slave
+    volumes_from:
+        - dns
+    environment:
+        - DNSDOCK_NAME=slave1
+        - DNSDOCK_IMAGE=demo
+slave2:
+    image: apemberton/jenkins-slave
+    volumes_from:
+        - dns
+    environment:
+        - DNSDOCK_NAME=slave2
+        - DNSDOCK_IMAGE=demo
+slave3:
+    image: apemberton/jenkins-slave
+    volumes_from:
+        - dns
+    environment:
+        - DNSDOCK_NAME=slave3
+        - DNSDOCK_IMAGE=demo
+proxy:
+    image: dockerfile/haproxy
+    expose:
+        - "4001"
+    volumes_from:
+        - mobileTeam2
+    volumes:
+        - ~/projects/cloudbees/docker/compose/docker-compose-joc/haproxy:/haproxy-override
+    environment:
+        - DNSDOCK_NAME=mobileteam
+        - DNSDOCK_IMAGE=proxy
+        - DNSDOCK_ALIAS=joc.proxy.docker,apiteam.proxy.docker
