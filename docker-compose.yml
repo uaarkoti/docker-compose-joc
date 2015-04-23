@@ -4,8 +4,8 @@ dns:
         - "172.17.42.1:53:53/udp"
     volumes: 
         - /var/run/docker.sock:/var/run/docker.sock
-        - ~/projects/cloudbees/docker/compose/docker-compose-joc:/data
-    command: "-debug=true"
+        - /Users/uaarkoti/CloudBees/docker/docker-compose-joc:/data
+    command: "-debug=false"
 joc:
     image: apemberton/jenkins-operations-center
     command: --prefix=""
@@ -75,7 +75,7 @@ proxy:
     volumes_from:
         - mobileTeam2
     volumes:
-        - ~/projects/cloudbees/docker/compose/docker-compose-joc/haproxy:/haproxy-override
+        - /Users/uaarkoti/CloudBees/docker/docker-compose-joc/haproxy:/haproxy-override
     environment:
         - DNSDOCK_NAME=mobileteam
         - DNSDOCK_IMAGE=proxy
