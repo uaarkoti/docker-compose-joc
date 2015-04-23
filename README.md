@@ -31,7 +31,7 @@ NOTE: If the directory `/etc/resolver` doesn't exist create one `sudo mkdir -p /
 - clone this repo to (that is what the Jenkins `HOME` default setting points to on the Mac: `/path/to/docker-compose-joc/`
 - If you wouldl like to have your Jenkins `HOME` directory somewhere else you need to update the `docker-compose.yml` file:
   - Update `/path/to/docker-compose-joc/` under dnsdock -> volumes to point to where you want your Jenkins `HOME` directory.
-  NOTE: You could have several different directories configured for different demos and just change this to point to the demo you want to run.
+> NOTE: You could have several different directories configured for different demos and just change this to point to the demo you want to run.
 - Run the setup `docker-compose up -d` and `docker-compose logs` to view the logs
 
 
@@ -42,9 +42,12 @@ If you are no longer able to access docker container hosts via Mac OS X:
 - make sure you are able to ping the `boot2docker ip` - ex (the IP may vary): `ping 192.168.59.103` from Mac OS X
 - check to see that the `ip route` you added, still points to your `boot2docker ip` - `sudo route -n get 172.17.42.1`
 - You may have to flush DNS cache - on Yosemite use: `sudo discoveryutil mdnsflushcache`
-NOTE: Update : 04/22/15 - dockerfile/haproxy image was missing. To create that container locally
-Checkout `git clone https://github.com/dockerfile/haproxy.git` then `cd haproxy` and build the docker image
-`docker build -t dockerfile/haproxy .`
+> Update : 04/22/15 - dockerfile/haproxy image was missing from docker hub. To create that container locally
+> Checkout `git clone https://github.com/dockerfile/haproxy.git`
+> `cd haproxy`
+> `docker build -t dockerfile/haproxy .`
+> `docker images`
+> Confirm that `dockerfile/haproxy` image exists
 
 ###Create a New Demo
 - You should probably fork this repo, but not absolutely necessary
